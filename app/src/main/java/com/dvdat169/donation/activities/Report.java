@@ -1,16 +1,14 @@
 package com.dvdat169.donation.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,7 +23,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.dvdat169.donation.api.DonationApi;
 import com.dvdat169.donation.models.Donation;
 import com.dvdat169.myfirstapplication.R;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -57,7 +54,7 @@ public class Report extends Base {
 
     //    DONATION ADAPTER
     class DonationAdapter extends ArrayAdapter<Donation> {
-        private Context context;
+        private final Context context;
 
         public List<Donation> donations;
 
@@ -69,6 +66,8 @@ public class Report extends Base {
 
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            @SuppressLint("ViewHolder")
             View view = inflater.inflate(R.layout.row_donate, parent, false);
             Donation donation = donations.get(position);
 
@@ -77,9 +76,9 @@ public class Report extends Base {
             TextView upvotesView = (TextView) view.findViewById(R.id.row_upvotes);
             TextView dateView = (TextView) view.findViewById(R.id.date);
 
-            amountView.setText("$" + donation.amount);
+            amountView.setText(String.format("$%d", donation.amount));
             methodView.setText(donation.paymentType);
-            upvotesView.setText("" + donation.upvotes);
+            upvotesView.setText(String.valueOf(donation.upvotes));
             dateView.setText(String.valueOf(LocalDate.now()));
             view.setTag(donation.id);
 

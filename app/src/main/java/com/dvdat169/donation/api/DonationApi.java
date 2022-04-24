@@ -2,12 +2,12 @@ package com.dvdat169.donation.api;
 
 import android.util.Log;
 
-import java.lang.reflect.Type;
-import java.util.List;
-
 import com.dvdat169.donation.models.Donation;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 
 public class DonationApi {

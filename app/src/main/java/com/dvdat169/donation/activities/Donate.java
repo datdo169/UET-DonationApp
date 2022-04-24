@@ -4,9 +4,23 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.NumberPicker;
+import android.widget.ProgressBar;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.dvdat169.donation.api.DonationApi;
 import com.dvdat169.donation.models.Donation;
@@ -14,29 +28,6 @@ import com.dvdat169.myfirstapplication.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.ProgressBar;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -116,7 +107,7 @@ public class Donate extends Base {
                 progressBar.setProgress(app.totalDonated);
                 amountTotal.setText(String.format("%d$", app.totalDonated));
 
-                Toast myToast = Toast.makeText(Donate.this, message, Toast.LENGTH_LONG);
+                Toast myToast = Toast.makeText(Donate.this, message, Toast.LENGTH_SHORT);
                 myToast.show();
             }
         });
@@ -201,7 +192,7 @@ public class Donate extends Base {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            this.dialog = new ProgressDialog(context, 1);
+            this.dialog = new ProgressDialog(context, 0);
             this.dialog.setMessage("Retrieving Donations List");
             this.dialog.show();
         }
@@ -272,6 +263,8 @@ public class Donate extends Base {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            this.dialog.setMessage("Success....");
+            this.dialog.show();
             if (this.dialog.isShowing())
                 this.dialog.dismiss();
         }
@@ -299,7 +292,7 @@ public class Donate extends Base {
             String res = null;
             try {
                 Log.v("ids", String.valueOf(params[1]));
-//                res = DonationApi.deleteAll((String) params[0]);
+                res = DonationApi.deleteAll((String) params[0]);
             } catch (Exception e) {
                 Log.v("donate", " RESET ERROR : " + e);
                 e.printStackTrace();
