@@ -13,7 +13,7 @@ public class Rest {
 	private static HttpURLConnection 	httpCon = null;
 	private static URL 					url;
 
-	private static final String hostURL = "https://json-server-dovandat.herokuapp.com/api/";
+	private static final String hostURL = "https://json-server-dovandat.herokuapp.com/api";
 	private static final String LocalhostURL = "http://192.168.0.105:4000/api";
 
 	public static void setup(String request) {
